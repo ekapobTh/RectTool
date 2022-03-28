@@ -10,19 +10,28 @@ public class ToolSubImage : ToolImage
     [SerializeField] private RectTransform bl;
     [SerializeField] private RectTransform br;
 
-    // TODO Register AnchorPoint
-    [Header("Anchor Point")]
-    [SerializeField] private AnchorPoint tlAnchorPoint;
-    [SerializeField] private AnchorPoint trAnchorPoint;
-    [SerializeField] private AnchorPoint blAnchorPoint;
-    [SerializeField] private AnchorPoint brAnchorPoint;
+    private AnchorPoint tlPoint;
+    private AnchorPoint trPoint;
+    private AnchorPoint blPoint;
+    private AnchorPoint brPoint;
+    private CenterPoint cPoint;
+
+    private bool _isFocus;
+    public bool isFocus => _isFocus;
 
     private void Awake()
     {
-        tlAnchorPoint.OnDragAction = SetupRectPoint;
-        trAnchorPoint.OnDragAction = SetupRectPoint;
-        blAnchorPoint.OnDragAction = SetupRectPoint;
-        brAnchorPoint.OnDragAction = SetupRectPoint;
+        _isFocus = false;
+    }
+
+    public void RegisterPoint(AnchorPoint tlPoint, AnchorPoint trPoint, AnchorPoint blPoint, AnchorPoint brPoint, CenterPoint cPoint)
+    {
+        this.tlPoint = tlPoint;
+        this.trPoint = trPoint;
+        this.blPoint = blPoint;
+        this.brPoint = brPoint;
+        this.cPoint = cPoint;
+        _isFocus = true;
     }
 
     public void SetupRectPoint(Vector2 point, AnchorPointType type)
@@ -32,7 +41,7 @@ public class ToolSubImage : ToolImage
 
         var currentAnchorMin = m_RectTransform.anchorMin;
         var currentAnchorMax = m_RectTransform.anchorMax;
-        Debug.Log($"{type} {newRect.x} {newRect.y}");
+
         switch (type)
         {
             case AnchorPointType.TopLeft:
@@ -58,25 +67,38 @@ public class ToolSubImage : ToolImage
                 }
                 break;
         }
-
         UpdateOtherRect(type);
     }
 
-    public void UpdateOtherRect(AnchorPointType type)
+    public void SetupCenterPoint(Vector2 point)
     {
-        if (!type.Equals(AnchorPointType.TopLeft))
-            tlAnchorPoint.SetPosition(tl.position);
-        if (!type.Equals(AnchorPointType.TopRight))
-            trAnchorPoint.SetPosition(tr.position);
-        if (!type.Equals(AnchorPointType.BottomLeft))
-            blAnchorPoint.SetPosition(bl.position);
-        if (!type.Equals(AnchorPointType.BottomRight))
-            brAnchorPoint.SetPosition(br.position);
+        transform.position = point;
+        ACConverter.AnchorToCorners(m_RectTransform,RectToolManager.Instance.GetMainRectTransform());
+        UpdateOtherRect();
     }
 
-    [ContextMenu("Show Point")]
-    public void GenerateRectPoint()
+    public void UpdateOtherRect(AnchorPointType type = AnchorPointType.Center)
     {
-        Debug.Log($"{m_RectTransform.anchoredPosition}");
+        if (!type.Equals(AnchorPointType.TopLeft))
+            tlPoint.SetPosition(tl.position);
+        if (!type.Equals(AnchorPointType.TopRight))
+            trPoint.SetPosition(tr.position);
+        if (!type.Equals(AnchorPointType.BottomLeft))
+            blPoint.SetPosition(bl.position);
+        if (!type.Equals(AnchorPointType.BottomRight))
+            brPoint.SetPosition(br.position);
+        if (!type.Equals(AnchorPointType.Center))
+            cPoint.SetPosition(transform.position);
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
+        tlPoint = null;
+        trPoint = null;
+        blPoint = null;
+        brPoint = null;
+        cPoint = null;
+        _isFocus = false;
     }
 }

@@ -1,25 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ToolImage : MonoBehaviour
 {
-    #region Constant
-    
-    #endregion
-
     [SerializeField] protected Image m_Image;
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetupImage(Sprite sprite)
     {
-        
+        m_Image.sprite = sprite;
+        m_Image.color = Color.white;
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void Reset()
     {
-        
+        m_Image.sprite = null;
     }
 }

@@ -1,27 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class AnchorPoint : MonoBehaviour, IDragHandler
+public class AnchorPoint : Point, IDragHandler
 {  
-    [SerializeField] private RectTransform m_RectTransform;
     [SerializeField] private AnchorPointType m_AnchorPointType;
 
-    public Action<Vector2, AnchorPointType> OnDragAction;
+    public Action<Vector2, AnchorPointType> OnAnchorDrag;
 
-    private Vector3 startPosition;
-    private Camera m_Camera;
-
-    private void Awake()
+    protected override void Awake()
     {
-        startPosition = transform.position;
-        m_Camera = Camera.main;
+        base.Awake();
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public override void OnDrag(PointerEventData eventData)
     {
-        transform.position = new Vector3(eventData.position.x, eventData.position.y, startPosition.z);
+        base.OnDrag(eventData);
         GenerateRectPoint();
     }
 
@@ -30,18 +24,15 @@ public class AnchorPoint : MonoBehaviour, IDragHandler
         transform.position = new Vector3(newPosition.x, newPosition.y, startPosition.z);
     }
 
-    [ContextMenu("Show Point")]
-    public void GenerateRectPoint()
+    private void GenerateRectPoint()
     {
         Vector2 parentSize = RectToolManager.Instance.GetScreenSize();
         Vector2 ourMinCorner = m_RectTransform.anchorMin.ComponentMultiply(parentSize) + m_RectTransform.offsetMin;
         Vector2 ourMaxCorner = m_RectTransform.anchorMax.ComponentMultiply(parentSize) + m_RectTransform.offsetMax;
         Vector2 centerPoint = Vector2.Lerp(ourMinCorner, ourMaxCorner, 0.5f);
 
-        OnDragAction?.Invoke(centerPoint, m_AnchorPointType);
-
-        //Debug.Log($"{parentSize} : {centerPoint}");
+        OnAnchorDrag?.Invoke(centerPoint, m_AnchorPointType);
     }
 }
 
-public enum AnchorPointType { TopLeft, TopRight, BottomLeft, BottomRight }
+public enum AnchorPointType { Center, TopLeft, TopRight, BottomLeft, BottomRight }

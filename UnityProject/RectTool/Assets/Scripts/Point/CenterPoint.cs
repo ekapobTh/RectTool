@@ -1,18 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class CenterPoint : MonoBehaviour
+public class CenterPoint : Point, IDragHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    public Action<Vector2> OnCenterDrag;
+
+    protected override void Awake()
     {
-        
+        base.Awake();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnDrag(PointerEventData eventData)
     {
-        
+        base.OnDrag(eventData);
+        GenerateRectPoint();
+    }
+
+    public void SetPosition(Vector2 newPosition)
+    {
+        transform.position = new Vector3(newPosition.x, newPosition.y, startPosition.z);
+    }
+
+    private void GenerateRectPoint()
+    {
+        OnCenterDrag?.Invoke(transform.position);
     }
 }

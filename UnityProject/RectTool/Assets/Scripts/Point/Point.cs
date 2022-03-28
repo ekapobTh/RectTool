@@ -1,18 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Point : MonoBehaviour
+public class Point : MonoBehaviour, IDragHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] protected RectTransform m_RectTransform;
+
+    public Action OnPointDrag;
+
+    protected Vector3 startPosition;
+
+    protected virtual void Awake()
     {
-        
+        startPosition = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void OnDrag(PointerEventData eventData)
     {
-        
+        transform.position = new Vector3(eventData.position.x, eventData.position.y, startPosition.z);
+        OnPointDrag?.Invoke();
     }
 }
