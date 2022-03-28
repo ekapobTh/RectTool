@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 public class ACConverter : MonoBehaviour
 {
     [MenuItem("Tools/RectTransform/Anchors to Corners %[")]
-    static void AnchorsToCorners()
+    public static void AnchorsToCorners() // TODO Set all child over canvas
     {
         var obj = Selection.transforms;
         Undo.RegisterCompleteObjectUndo(obj, "Anchors to Corners");
