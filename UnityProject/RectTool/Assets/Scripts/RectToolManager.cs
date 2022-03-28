@@ -38,6 +38,7 @@ public class RectToolManager : MonoBehaviour
     {
         _instance = this;
         _baseRectSize = RectSize.FourThree;
+        Reset();
     }
 
     private void Reset()

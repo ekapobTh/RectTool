@@ -22,6 +22,8 @@ public class ToolSubImage : ToolImage
     private void Awake()
     {
         _isFocus = false;
+        base.Reset();
+        Reset();
     }
 
     public void RegisterPoint(AnchorPoint tlPoint, AnchorPoint trPoint, AnchorPoint blPoint, AnchorPoint brPoint, CenterPoint cPoint)
@@ -93,7 +95,6 @@ public class ToolSubImage : ToolImage
 
     public override void Reset()
     {
-        base.Reset();
         tlPoint = null;
         trPoint = null;
         blPoint = null;
