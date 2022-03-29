@@ -7,7 +7,15 @@ public class Menu : Button
 {
     [SerializeField] private GameObject SubmenuGameObject;
 
-    public void Hide() => SubmenuGameObject?.SetActive(false);
+    public void Hide()
+    {
+        if(SubmenuGameObject != null)
+            SubmenuGameObject?.SetActive(false);
+    }
 
-    public void Show() => SubmenuGameObject?.SetActive(true);
+    public void Show()
+    {
+        if (SubmenuGameObject != null)
+            SubmenuGameObject?.SetActive(true);
+    }
 }

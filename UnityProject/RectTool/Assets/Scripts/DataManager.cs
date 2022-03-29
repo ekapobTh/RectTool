@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class SaveManager : MonoBehaviour
+public class DataManager : MonoBehaviour
 {
-    private static SaveManager _instance;
-    public static SaveManager Instance
+    private static DataManager _instance;
+    public static DataManager Instance
     {
         get
         {
             if (_instance == null)
-                _instance = FindObjectOfType<SaveManager>();
+                _instance = FindObjectOfType<DataManager>();
 
             return _instance;
         }
@@ -24,8 +24,18 @@ public class SaveManager : MonoBehaviour
 
     private string[] currentLoadPath = null;
 
-    private RectToolData _data = new RectToolData(); // TODO Loaddata
-    public RectToolData data => _data;
+    private RectToolData _data; // TODO Loaddata
+    public RectToolData data
+    {
+        get
+        {
+            if (_data == null)
+                _data = new RectToolData();
+            return _data;
+        }
+    }
+
+    public void SetDebug(bool isDebug) => _data.debug = isDebug;
 
     public void ChooseLoadFile()
     {

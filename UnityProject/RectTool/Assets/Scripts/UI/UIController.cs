@@ -25,19 +25,29 @@ public class UIController : MonoBehaviour
 
     public void Awake()
     {
-        fileButton.onClick.RemoveAllListeners();
-        fileButton.onClick.AddListener(OnFileClick);
-        ImageListButton.onClick.RemoveAllListeners();
-        ImageListButton.onClick.AddListener(OnImageListClick);
+        outAreaButton.onClick.RemoveAllListeners();
+        outAreaButton.onClick.AddListener(OnOutAreaClick);
+        fileButton.onClick.AddListener(OnClickShowOutArea);
+        fileButton.onClick.AddListener(() => { HideOtherMenu(fileButton); });
+        ImageListButton.onClick.AddListener(OnClickShowOutArea);
+        ImageListButton.onClick.AddListener(() => { HideOtherMenu(ImageListButton); });
+        HideOtherMenu(null);
     }
 
-    public void OnFileClick()
+    private void OnClickShowOutArea() => outAreaButton.gameObject.SetActive(true);
+    private void OnOutAreaClick()
     {
-        // Show File Menu new load set bg
+        fileButton.Hide();
+        ImageListButton.Hide();
+        outAreaButton.gameObject.SetActive(false);
     }
 
-    public void OnImageListClick()
+
+    private void HideOtherMenu(Menu except)
     {
-        // Show Side Image
+        if (!fileButton.Equals(except))
+            fileButton.Hide();
+        if (!ImageListButton.Equals(except))
+            ImageListButton.Hide();
     }
 }
