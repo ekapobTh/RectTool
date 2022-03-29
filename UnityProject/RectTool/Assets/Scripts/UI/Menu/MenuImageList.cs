@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MenuImageList : Menu
+﻿public class MenuImageList : Menu
 {
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 }

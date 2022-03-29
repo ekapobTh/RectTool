@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
@@ -25,12 +23,15 @@ public class UIController : MonoBehaviour
 
     public void Awake()
     {
+        #region Button Setup
         outAreaButton.onClick.RemoveAllListeners();
         outAreaButton.onClick.AddListener(OnOutAreaClick);
         fileButton.onClick.AddListener(OnClickShowOutArea);
         fileButton.onClick.AddListener(() => { HideOtherMenu(fileButton); });
         ImageListButton.onClick.AddListener(OnClickShowOutArea);
         ImageListButton.onClick.AddListener(() => { HideOtherMenu(ImageListButton); });
+        #endregion
+
         HideOtherMenu(null);
     }
 
@@ -41,7 +42,6 @@ public class UIController : MonoBehaviour
         ImageListButton.Hide();
         outAreaButton.gameObject.SetActive(false);
     }
-
 
     private void HideOtherMenu(Menu except)
     {

@@ -35,7 +35,11 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void SetDebug(bool isDebug) => _data.debug = isDebug;
+    public void SetDebug(bool isDebug)
+    {
+        _data.debug = isDebug;
+        RectToolManager.Instance.UpdateDebug();
+    }
 
     public void ChooseLoadFile()
     {
@@ -68,7 +72,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void LoadFileToImage(string fileContent, string[] paths)
+    private void LoadFileToImage(string fileContent, string[] paths)
     {
         currentLoadPath = paths;
         _data = JsonMapper.ToObject<RectToolData>(fileContent);

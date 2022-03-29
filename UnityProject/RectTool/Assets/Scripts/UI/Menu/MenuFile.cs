@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuFile : Menu
@@ -11,7 +9,7 @@ public class MenuFile : Menu
 
     protected override void Awake()
     {
-        onClick.AddListener(Show);
+        base.Awake();
         newButton.onClick.AddListener(OnClickNew);
         loadButton.onClick.AddListener(OnClickLoad);
     }
@@ -30,7 +28,7 @@ public class MenuFile : Menu
 
     private void OnClickLoad()
     {
-        // TODO load
+        DataManager.Instance.ChooseLoadFile();
         Hide();
     }
 }
