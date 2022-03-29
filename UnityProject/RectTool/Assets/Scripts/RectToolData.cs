@@ -3,14 +3,12 @@
     public int current_screen;
     public string image_uri;
     public SubImageData[] sub_image;
-    public bool debug;
 
     public RectToolData()
     {
         current_screen = 1;
         image_uri = string.Empty;
         sub_image = new SubImageData[1] { new SubImageData() };
-        debug = false;
     }
 
     public class SubImageData

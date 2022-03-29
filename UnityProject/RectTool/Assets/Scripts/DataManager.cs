@@ -35,12 +35,6 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void SetDebug(bool isDebug)
-    {
-        _data.debug = isDebug;
-        RectToolManager.Instance.UpdateDebug();
-    }
-
     public void ChooseLoadFile()
     {
         var paths = StandaloneFileBrowser.OpenFilePanel("Choose Galaxy Chat json file", Environment.GetFolderPath(Environment.SpecialFolder.Desktop), FILE_TYPE, false);

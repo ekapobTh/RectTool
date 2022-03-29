@@ -31,9 +31,6 @@ public class RectToolManager : MonoBehaviour
     [SerializeField] private AnchorPoint brPoint;
     [SerializeField] private CenterPoint cPoint;
 
-    [Space(20)]
-    [SerializeField] private GameObject reporter;
-
     private RectSize _baseRectSize;
     public RectSize baseRectSize => _baseRectSize;
 
@@ -55,7 +52,6 @@ public class RectToolManager : MonoBehaviour
 
     public Vector2 GetScreenSize() => backgroundRectTransform.rect.size;
     public RectTransform GetMainRectTransform() => backgroundRectTransform;
-    public void UpdateDebug() => reporter.SetActive(DataManager.Instance.data.debug);
 }
 
 public enum RectSize { FourThree, SixteenNine }

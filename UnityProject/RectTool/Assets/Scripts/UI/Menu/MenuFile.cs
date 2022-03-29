@@ -16,8 +16,8 @@ public class MenuFile : Menu
 
     protected override void Start()
     {
-        debugToggle.isOn = DataManager.Instance.data.debug;
-        debugToggle.onValueChanged.AddListener(DataManager.Instance.SetDebug);
+        debugToggle.isOn = false;
+        debugToggle.onValueChanged.AddListener(DebugManager.Instance.SetDebug);
     }
 
     private void OnClickNew()
